@@ -3,7 +3,9 @@ My neovim config
 
 ## Installation
 
-Run the `install` script to create a symbolic link at `~/.config/nvim` to wherever you put this repo. (obviously not required if you cloned it there)
+Clone somewhere your user has access to, which is not the `~/.config` folder. (for example `~/git-repos/nvim-init`)
+
+Run the `install` script.
 
 This might take a moment.
 

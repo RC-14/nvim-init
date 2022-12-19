@@ -38,14 +38,7 @@ return require('packer').startup(function(use)
 		}
 	}
 
-	use {
-		'max397574/better-escape.nvim',
-		config = function()
-			require('better_escape').setup {
-				mapping = { 'jj' }
-			}
-		end,
-	}
+	use 'max397574/better-escape.nvim'
 
 	use 'lukas-reineke/indent-blankline.nvim'
 

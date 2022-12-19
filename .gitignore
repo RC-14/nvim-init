@@ -1,0 +1,6 @@
+# MacOS stuff
+.DS_Store
+
+# Packer file that doesn't seem to be neccessary to run nvim
+plugin/packer_compiled.lua
+

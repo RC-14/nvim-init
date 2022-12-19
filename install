@@ -1,5 +1,37 @@
 #!/usr/bin/env bash
 
+if ! command -v nvim &> /dev/null; then
+	echo You need to have nvim installed
+	exit 1
+fi
+
+if [ ! -x "install" ] || [ ! -f "init.lua" ] || [ ! -d ".git" ]; then
+	echo You need to run this from the root of the repo
+	exit 1
+fi
+
+# Remove old neovim files
 rm -rf ~/.config/nvim
+rm -rf ~/.local/share/nvim
+rm -rf ~/.cache/nvim
+
+# Install packer
+git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+nvim -u "$(dirname $0)/lua/rc-14/packer.lua" --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
+# Remove the config folder again in case it was automatically made
+rm -rf ~/.config/nvim
+
+# Link the repo 
 ln -s $(pwd) ~/.config/nvim
 
+# Ugly hack to make tree sitter install as much as it can even if it gets stuck
+COUNTER=0
+while
+	((COUNTER++))
+	timeout --preserve-status 60 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+	[ $? -ne 0 ] || [ ${COUNTER} -eq 3 ]
+do true; done
+
+nvim

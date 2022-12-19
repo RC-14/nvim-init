@@ -1,5 +1,5 @@
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+-- Check if an init.lua exists
+local bootstrap = 1 ~= vim.fn.filereadable(vim.fn.stdpath('config') .. '/init.lua')
 
 return require('packer').startup(function(use)
 	-- Packer can manage itself
@@ -49,7 +49,10 @@ return require('packer').startup(function(use)
 
 	use 'andymass/vim-matchup'
 
-	use 'windwp/nvim-ts-autotag'
-
 	use 'numToStr/Comment.nvim'
+
+	-- Avoid errors while bootstapping
+	if not bootstrap then
+		use 'windwp/nvim-ts-autotag'
+	end
 end)

@@ -5,7 +5,7 @@ vim.keymap.set('n', '<leader>Y', '"+Y')
 vim.keymap.set({'n', 'v'}, '<leader>P', '"+P')
 
 -- Open netrw
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set('n', '<leader>ex', vim.cmd.Ex)
 
 -- Move highlighted lines up or down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

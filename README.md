@@ -1,5 +1,8 @@
 # nvim-init
-My neovim config
+
+My neovim config.
+
+Heavily "inspired" by [ThePrimeagen/init.lua](https://github.com/ThePrimeagen/init.lua).
 
 ## Installation
 

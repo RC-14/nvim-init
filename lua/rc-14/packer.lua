@@ -51,6 +51,8 @@ return require('packer').startup(function(use)
 
 	use 'numToStr/Comment.nvim'
 
+	use 'ThePrimeagen/vim-be-good'
+
 	-- Avoid errors while bootstapping
 	if not bootstrap then
 		use 'windwp/nvim-ts-autotag'

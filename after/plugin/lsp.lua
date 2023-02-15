@@ -7,7 +7,7 @@ lsp.ensure_installed({
 	'clangd',
 	'tsserver',
 	'eslint',
-	'sumneko_lua',
+	'lua_ls',
 })
 
 local cmp = require('cmp')

@@ -40,6 +40,8 @@ vim.o.colorcolumn = '80'
 -- Search
 vim.o.hlsearch = false
 vim.o.incsearch = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
 -- Status Line
 vim.o.laststatus = 2

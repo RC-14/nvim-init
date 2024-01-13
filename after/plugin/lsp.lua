@@ -1,29 +1,41 @@
-local lsp = require('lsp-zero')
+local lsp_zero = require('lsp-zero')
 
-lsp.preset('recommended')
+lsp_zero.preset('recommended')
 
-lsp.ensure_installed({
-	'bashls',
-	'clangd',
-	'tsserver',
-	'eslint',
-	'lua_ls',
+require('mason').setup({})
+require('mason-lspconfig').setup({
+	ensure_installed = {
+		'bashls',
+		'clangd',
+		'tsserver',
+		'eslint',
+		'lua_ls',
+	},
+	handlers = {
+		lsp_zero.default_setup,
+	},
 })
 
 local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-	['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-	['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-	['<C-y>'] = cmp.mapping.confirm({ select = true }),
-	["<C-Space>"] = cmp.mapping.complete(),
+
+local cmp_action = require('lsp-zero').cmp_action()
+
+cmp.setup({
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<C-Space>'] = cmp.mapping.complete(),
+		['<C-y>'] = cmp.mapping.confirm({ select = true }),
+		['<C-f>'] = cmp_action.luasnip_jump_forward(),
+		['<C-b>'] = cmp_action.luasnip_jump_backward(),
+		['<C-u>'] = cmp.mapping.scroll_docs(-4),
+		['<C-d>'] = cmp.mapping.scroll_docs(4),
+	})
 })
 
-lsp.setup_nvim_cmp({
-	mapping = cmp_mappings
-})
-
-lsp.on_attach(function(client, bufnr)
+lsp_zero.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
 
 	if client.name == 'eslint' then
@@ -44,6 +56,6 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 -- Bacause I'll hardly ever use lua for anything else than my nvim config
-lsp.nvim_workspace()
+require('lspconfig').lua_ls.setup(lsp_zero.nvim_lua_ls())
 
-lsp.setup()
+lsp_zero.setup()
